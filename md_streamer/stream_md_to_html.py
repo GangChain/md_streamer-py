@@ -40,6 +40,8 @@ class MDStreamer:
         text = re.sub(r'\*\*(\S+)', r'<strong>\1', text)
         # Replace '*text' with '<em>text'
         text = re.sub(r'\*(\S+)', r'<em>\1', text)
+        #Replace '`text' with <code>text
+        text = re.sub(r'\`(\S+)', r'<code>\1', text)
         # Replace '```<code-language> or ```\n' with ''<pre><code class="language-{code-lang}>'
         code_pattern = r"```[\\n|\n]|```(\S+)"
         code_tags = re.search(code_pattern, text)
@@ -64,15 +66,23 @@ class MDStreamer:
             if stream_length > self.last_stream_length:
                 self.last_stream_length = stream_length     
             if stream_response[:self.last_stream_length]:
-                response_to_send += self.replace_strong_tag(mistune.html(" ".join(stream_response[:self.last_stream_length])))
+                length_to_process = self.find_last_word_index(stream_response[:self.last_stream_length])
+                response_to_send += self.replace_strong_tag(mistune.html("".join(stream_response[:length_to_process+1])))
         return response_to_send.replace('\n', '')
+    
+    @staticmethod
+    def find_last_word_index(tokens: list) -> int:
+        for index in range(len(tokens)-1, -1, -1):
+            if re.search(r'[A-Za-z]', tokens[index]):
+                return index
+        return 0
 
     @staticmethod
     def split_mark_text(text):
         split_text = []
         for index, t in enumerate(text.split("\n")):
-            if t.strip(): 
-                x = t.split()
+            if t: 
+                x = re.split(r'\S+|\s+', t)
                 if index > 0:
                     x[0] = "\n" + x[0]
                 split_text.extend(x)

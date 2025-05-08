@@ -1,5 +1,5 @@
-# md_streamer-py Streaming Markdown to HTML Converter
-
+# Streaming Markdown to HTML Converter (md_streamer-py)
+ 
 ## Overview
 This repository provides a lightweight and efficient Python package for converting streaming Markdown content into HTML in real-time. It is designed for applications that need dynamic Markdown rendering, such as live blogging, documentation platforms, and chat applications.
 
