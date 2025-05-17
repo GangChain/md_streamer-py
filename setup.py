@@ -2,15 +2,14 @@ from setuptools import setup, find_packages
 
 setup(
     name='md_streamer',
-    version='0.0.3',
+    version='0.1.0',
     packages=find_packages(),
     install_requires=[
-        # List your dependencies here
         'mistune',
     ],
     author='Gangchain',
     author_email='gaganjot1872@gmail.com',
-    description='streaming markdown to html converter',
+    description='streaming markdown parser',
     long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     url='https://github.com/GangChain/md_streamer-py',

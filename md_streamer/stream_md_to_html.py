@@ -73,7 +73,7 @@ class MDStreamer:
     @staticmethod
     def find_last_word_index(tokens: list) -> int:
         for index in range(len(tokens)-1, -1, -1):
-            if re.search(r'[A-Za-z]', tokens[index]):
+            if re.search(r'^[A-Za-z]', tokens[index]):
                 return index
         return 0
 
@@ -82,7 +82,7 @@ class MDStreamer:
         split_text = []
         for index, t in enumerate(text.split("\n")):
             if t: 
-                x = re.split(r'\S+|\s+', t)
+                x = re.findall(r'\S+|\s+', t)
                 if index > 0:
                     x[0] = "\n" + x[0]
                 split_text.extend(x)
